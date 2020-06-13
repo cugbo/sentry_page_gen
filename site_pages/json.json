@@ -1,0 +1,393 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Team Sentry Page Generator API",
+        "description": "A Static page generator API",
+        "version": "v1"
+    },
+    "host": "pages.microapi.dev",
+    "schemes": [
+        "https"
+    ],
+    "basePath": "/v1",
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "securityDefinitions": {
+        "basic": {
+            "type": "basic"
+        }
+    },
+    "security": [
+        {
+            "basic": []
+        }
+    ],
+    "paths": {
+        "/list_pages/": {
+            "get": {
+                "operationId": "list_pages_list",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Page"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "list_pages"
+                ]
+            },
+            "parameters": []
+        },
+        "/login/": {
+            "post": {
+                "operationId": "login_create",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "201": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "login"
+                ]
+            },
+            "parameters": []
+        },
+        "/register/": {
+            "post": {
+                "operationId": "register_create",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/RegisterSerialiazer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/RegisterSerialiazer"
+                        }
+                    }
+                },
+                "tags": [
+                    "register"
+                ]
+            },
+            "parameters": []
+        },
+        "/retrieve_page_html/{slug}/": {
+            "get": {
+                "operationId": "retrieve_page_html_read",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "retrieve_page_html"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "slug",
+                    "in": "path",
+                    "required": true,
+                    "type": "string",
+                    "format": "slug",
+                    "pattern": "^[-a-zA-Z0-9_]+$"
+                }
+            ]
+        },
+        "/set_page_markdown/{slug}/": {
+            "get": {
+                "operationId": "set_page_markdown_read",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/PageUpdate"
+                        }
+                    }
+                },
+                "tags": [
+                    "set_page_markdown"
+                ]
+            },
+            "put": {
+                "operationId": "set_page_markdown_update",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/PageUpdate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/PageUpdate"
+                        }
+                    }
+                },
+                "tags": [
+                    "set_page_markdown"
+                ]
+            },
+            "patch": {
+                "operationId": "set_page_markdown_partial_update",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/PageUpdate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/PageUpdate"
+                        }
+                    }
+                },
+                "tags": [
+                    "set_page_markdown"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "slug",
+                    "in": "path",
+                    "required": true,
+                    "type": "string",
+                    "format": "slug",
+                    "pattern": "^[-a-zA-Z0-9_]+$"
+                }
+            ]
+        }
+    },
+    "definitions": {
+        "MetaTag": {
+            "required": [
+                "name",
+                "content"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "title": "ID",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "name": {
+                    "title": "Name",
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 1
+                },
+                "content": {
+                    "title": "Content",
+                    "type": "string",
+                    "maxLength": 500,
+                    "minLength": 1
+                }
+            }
+        },
+        "Script": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "title": "ID",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "src": {
+                    "title": "Src",
+                    "type": "string",
+                    "maxLength": 100,
+                    "x-nullable": true
+                },
+                "body": {
+                    "title": "Body",
+                    "type": "string",
+                    "maxLength": 400,
+                    "x-nullable": true
+                }
+            }
+        },
+        "CSS": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "title": "ID",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "rel": {
+                    "title": "Rel",
+                    "type": "string",
+                    "maxLength": 100,
+                    "x-nullable": true
+                },
+                "href": {
+                    "title": "Href",
+                    "type": "string",
+                    "maxLength": 400,
+                    "x-nullable": true
+                }
+            }
+        },
+        "Page": {
+            "required": [
+                "meta_tags",
+                "scripts",
+                "css",
+                "title"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "title": "ID",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "meta_tags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/MetaTag"
+                    }
+                },
+                "scripts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Script"
+                    }
+                },
+                "css": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CSS"
+                    }
+                },
+                "title": {
+                    "title": "Title",
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 1
+                },
+                "slug": {
+                    "title": "Slug",
+                    "type": "string",
+                    "format": "slug",
+                    "pattern": "^[-a-zA-Z0-9_]+$",
+                    "readOnly": true,
+                    "minLength": 1
+                },
+                "author": {
+                    "title": "Author",
+                    "type": "string",
+                    "maxLength": 100,
+                    "x-nullable": true
+                },
+                "date_created": {
+                    "title": "Date created",
+                    "type": "string",
+                    "format": "date",
+                    "readOnly": true
+                },
+                "category": {
+                    "title": "Category",
+                    "type": "string",
+                    "maxLength": 200,
+                    "x-nullable": true
+                },
+                "tags": {
+                    "title": "Tags",
+                    "type": "string",
+                    "maxLength": 200,
+                    "x-nullable": true
+                },
+                "content": {
+                    "title": "Content",
+                    "type": "string",
+                    "x-nullable": true
+                }
+            }
+        },
+        "RegisterSerialiazer": {
+            "required": [
+                "username",
+                "password"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "title": "ID",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "username": {
+                    "title": "Username",
+                    "description": "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
+                    "type": "string",
+                    "pattern": "^[\\w.@+-]+$",
+                    "maxLength": 150,
+                    "minLength": 1
+                },
+                "email": {
+                    "title": "Email address",
+                    "type": "string",
+                    "format": "email",
+                    "maxLength": 254
+                },
+                "password": {
+                    "title": "Password",
+                    "type": "string",
+                    "maxLength": 128,
+                    "minLength": 1
+                }
+            }
+        },
+        "PageUpdate": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "title": "Content",
+                    "type": "string",
+                    "x-nullable": true
+                }
+            }
+        }
+    }
+}
